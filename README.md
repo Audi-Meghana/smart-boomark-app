@@ -1,16 +1,42 @@
-# React + Vite
+SmartBookmark Application
+Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SmartBookmark is a secure, cloud-based bookmark management web application that allows users to save, organize, and access their bookmarks from any device. The application focuses on simplicity, data privacy, and a clean user experience while ensuring real-time synchronization.
+Key Features
 
-Currently, two official plugins are available:
+Secure Google authentication
+Add, view, search, and filter bookmarks
+Soft delete (Trash) functionality
+User profile with activity insights
+Responsive and modern UI
+Strict data isolation using Row Level Security (RLS)
+Technology Stack
+Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React (Vite)
 
-## React Compiler
+Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Lucide Icons
 
-## Expanding the ESLint configuration
+Backend & Database
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Supabase (PostgreSQL)
+
+Supabase Authentication (Google OAuth)
+
+Row Level Security (RLS)
+
+Deployment
+
+Vercel
+
+Authentication & Security
+
+Google OAuth authentication via Supabase
+
+Secure session handling and token refresh
+
+Each bookmark is associated with the authenticated user
+
+RLS policies enforce strict access control at the database level
