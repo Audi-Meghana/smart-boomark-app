@@ -16,8 +16,6 @@ import Profile from "../pages/Profile";
 export default function Dashboard() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // 👇 controls what is shown in main panel
   const [active, setActive] = useState("bookmarks");
 
   useEffect(() => {
@@ -43,8 +41,8 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      {/* ================= SIDEBAR ================= */}
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
+      {/* ================= DESKTOP SIDEBAR ================= */}
       <aside className="w-64 bg-white border-r hidden md:flex flex-col">
         <div className="px-6 py-6 border-b">
           <h2 className="text-2xl font-extrabold text-indigo-600">
@@ -95,14 +93,44 @@ export default function Dashboard() {
 
       {/* ================= MAIN ================= */}
       <div className="flex-1 flex flex-col">
-        <header className="bg-white border-b px-6 py-4">
+        {/* HEADER */}
+        <header className="bg-white border-b px-4 md:px-6 py-4">
           <h1 className="text-lg font-semibold">
             Welcome, {user.user_metadata?.full_name}
           </h1>
         </header>
 
-        <main className="flex-1 p-6">
-          {/* 📌 BOOKMARK LIST */}
+        {/* ================= MOBILE TOP NAV ================= */}
+        <div className="md:hidden bg-white border-b flex justify-around py-2">
+          <MobileNavItem
+            icon={<Bookmark size={20} />}
+            active={active === "bookmarks"}
+            onClick={() => setActive("bookmarks")}
+          />
+          <MobileNavItem
+            icon={<PlusCircle size={20} />}
+            active={active === "add"}
+            onClick={() => setActive("add")}
+          />
+          <MobileNavItem
+            icon={<Trash2 size={20} />}
+            active={active === "trash"}
+            onClick={() => setActive("trash")}
+          />
+          <MobileNavItem
+            icon={<User size={20} />}
+            active={active === "profile"}
+            onClick={() => setActive("profile")}
+          />
+          <MobileNavItem
+            icon={<LogOut size={20} />}
+            danger
+            onClick={handleLogout}
+          />
+        </div>
+
+        {/* CONTENT */}
+        <main className="flex-1 p-4 md:p-6">
           {active === "bookmarks" && (
             <BookmarkList
               userId={user.id}
@@ -110,19 +138,16 @@ export default function Dashboard() {
             />
           )}
 
-          {/* ➕ ADD BOOKMARK FORM */}
           {active === "add" && (
             <BookmarkForm
               onSuccess={() => setActive("bookmarks")}
             />
           )}
 
-          {/* 🗑 TRASH */}
           {active === "trash" && (
             <TrashList userId={user.id} />
           )}
 
-          {/* 👤 PROFILE */}
           {active === "profile" && (
             <Profile user={user} />
           )}
@@ -133,7 +158,6 @@ export default function Dashboard() {
 }
 
 /* ================= SIDEBAR ITEM ================= */
-
 function SidebarItem({ icon, label, active, onClick }) {
   return (
     <button
@@ -147,6 +171,25 @@ function SidebarItem({ icon, label, active, onClick }) {
     >
       {icon}
       {label}
+    </button>
+  );
+}
+
+/* ================= MOBILE NAV ITEM ================= */
+function MobileNavItem({ icon, active, onClick, danger }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`p-2 rounded-lg transition
+        ${
+          danger
+            ? "text-red-500"
+            : active
+            ? "text-indigo-600 bg-indigo-50"
+            : "text-gray-500"
+        }`}
+    >
+      {icon}
     </button>
   );
 }
